@@ -1,3 +1,11 @@
+'''
+A collection of various methods to parse, process and manipulate PGN chess text files I used when creating this project.
+May be useful for someone in the future.
+
+Many require python-chess (among other libraries) to be imported. For now, this will have to be done in your main script file.
+
+'''
+
 def get_loser(parsed_pgn_file):
     
     result = parsed_pgn_file.headers["Result"]
