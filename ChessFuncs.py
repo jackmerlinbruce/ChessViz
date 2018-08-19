@@ -13,6 +13,21 @@ def get_loser(parsed_pgn_file):
     
     return loser
 
+def get_loser(board):
+    
+    result = parsed_pgn_file.headers["Result"]
+    
+    white_win = '1-0'
+    black_win = '0-1'
+    
+    loser = None
+    if result == white_win:
+        loser =  0 # is BLACK
+    if result == black_win:
+        loser =  1 # is WHITE
+    
+    return loser
+
 def get_check_mate_pos(parsed_pgn_file, loser):
     '''
     takes in a py-chess board obj, and a black (0) or white (1) loser, spits out check_mate_pos as a number
@@ -107,6 +122,55 @@ def remove_pgns(directory, file_name_identifier):
     for file in os.listdir(directory):
         if file_name_identifier in file:
             os.remove(directory+f)
+            
+def unzip(zipped_pgn):
+    '''
+    unzips .bz2 pgn files: zipped_pgn
+    maybe won't work if "data" variable is saved to RAM, as some unzipped files will be 20GB+ !
+    '''
+    
+    filepath = zipped_pgn
+    zipfile = bz2.BZ2File(filepath)
+    data = zipfile.read()
+    newfilepath = "pgn1.txt"
+    open(newfilepath, 'wb').write(data) 
+
+def parse_pgn(pgn_list):
+    '''
+    1) takes a list of pgn lines
+    2) writes line to file on disk 
+    3) returns a py-chess pgn object
+    '''
+    
+    with open("pgn-chunk.txt", "w") as pgn_chunk:
+        for line in pgn_list:
+            pgn_chunk.write(line)
+            
+    parsed_pgn = pychess.read_game(open("pgn-chunk.txt"))
+    return parsed_pgn
+
+def num_chess_games(pgn_path):
+    '''
+    Uses the decompressed lichess.org pgn file sizes to predict the number of chess games inside.
+    Means a for loop doesn't have to load the entire thing before hand.
+    '''
+    import os
+    pgn_size = os.stat(pgn_path).st_size
+    x = 121332/92811021
+    return round(pgn_size*x)
+
+def cpuTime(t="days"):
+    '''Estimated of the total time to process 400 million games of chess'''
+    
+    mins = (1300/450) * 7
+    x = (409700297/121332)
+    hours = (mins * x)/60
+    days = hours/24
+    
+    if t == "hours":
+        return round(hours)
+    if t == "days":
+        return round(days)
             
 if __name__ == "__main__":
     print("\nHere are some chess functions.\n")
