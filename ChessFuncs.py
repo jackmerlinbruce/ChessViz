@@ -179,6 +179,20 @@ def cpuTime(t="days"):
         return round(hours)
     if t == "days":
         return round(days)
+    
+def check_same_file():
+    '''
+    Checks the multiprocessed output data is same as normally processed data...
+    ...because obv the order of the write is different.    
+    '''
+    import pandas as pd
+    pdf = pd.read_csv("test-results-plain.txt", names=["king"])
+    mdf = pd.read_csv("test-results-multi.txt", names=["king"])
+    return pdf['king'].mode() == mdf['king'].mode()
+
+def speed_increase(singleprocessingfunc,multiprocessingfunc):
+    speed_increase = singleprocessingfunc / multiprocessingfunc
+    print(f"Multiprocessing was {round(speed_increase,2)}X faster.")
             
 if __name__ == "__main__":
     print("\nHere are some chess functions.\n")
