@@ -157,6 +157,27 @@ def parse_pgn(pgn_list):
     parsed_pgn = pychess.read_game(open("pgn-chunk.txt"))
     return parsed_pgn
 
+def does_q_checkmate_k(board, winner, loser):
+    #obv, only accounts for when a queen is DIRECTLY attacking a checkmated king,
+    #not accounting for the lines of attack which PREVENT the king from moving
+
+    try:
+        #uses .attackers() to find which squares are attacking out checkmated king?
+        board_string = str(board.attackers(winner, board.king(loser))).replace(" ","")[::-1] #removes whitespace and reverses str
+        board_string = board_string.split("\n") #split in ranks (horizontally)
+        board_string = [b[::-1] for b in board_string] #reverse each rank because h8 is the final sq
+        board_string = "".join(board_string) #rejoin list
+        board_string = list(enumerate(board_string)) #enumerate list as this is the way squares are counted (but in reverse)
+
+        #is a queen on one of those squares?
+        queen_num = board.queen(winner)
+        does_q_checkmate_k = board_string[queen_num][1] is not '.' #is there a piece at the index which the queen is in
+
+        return does_q_checkmate_k
+
+    except:
+        return False
+
 def num_chess_games(pgn_path):
     '''
     Uses the decompressed lichess.org pgn file sizes to predict the number of chess games inside.
