@@ -1,5 +1,5 @@
 # ChessViz
-How to visualize 400 million games of chess (PGN text files) using Python and a (moderately) powered laptop.
+How to visualize 400 million games of chess (PGN text files) using Python and few (moderately powered) laptops.
 
 Goals: 
 1) Download PGN files from: https://database.lichess.org/
