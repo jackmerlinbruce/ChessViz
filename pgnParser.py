@@ -17,7 +17,7 @@ import time
 #Create list of PGN files
 pgns = [file for file in os.listdir() if "lichess" in file]
 out_path = "test-results.txt"
-out_paths = ["PARSED_"+pgn for pgn in pgns]
+out_paths = ["PARSED_"+pgn[:-4]+".txt" for pgn in pgns]
 
 #the thing which will run simultaneously
 def main(pgn_file, out_path):
