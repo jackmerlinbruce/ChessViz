@@ -15,7 +15,7 @@ from time import sleep
 import time
 
 #Create list of PGN files
-pgns = [file for file in os.listdir() if "test-" in file]
+pgns = [file for file in os.listdir() if "lichess" in file]
 out_path = "test-results.txt"
 out_paths = ["PARSED_"+pgn for pgn in pgns]
 
