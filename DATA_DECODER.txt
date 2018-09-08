@@ -1,9 +1,0 @@
-# col 1: result
-	# 0 = BLACK win; 1 = WHITE win; 2 = DRAW
-
-# col 1: king_square
-	# single number (“56”) = king square of loser;
-	# double number (“23-63”) = (white-black) when DRAW
-
-# col 2: queen_square
-	# if queen checkmated king, this was her square
