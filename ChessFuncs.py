@@ -177,6 +177,33 @@ def does_q_checkmate_k(board, winner, loser):
 
     except:
         return False
+    
+def does_piece_checkmate_king(board, winner, loser, piece):
+    
+    try:
+        board_string = str(board.attackers(winner, board.king(loser))).replace(" ","")[::-1]
+        board_string = board_string.split("\n")
+        board_string = [b[::-1] for b in board_string]
+        board_string = "".join(board_string)
+        board_string = list(enumerate(board_string))
+
+        if piece == 'rook':
+            piece_num = board.rook(winner)
+            does_piece_checkmate_king = board_string[piece_num][1] is not '.'
+        if piece == 'bishop':
+            piece_num = board.bishop(winner)
+            does_piece_checkmate_king = board_string[piece_num][1] is not '.'
+        if piece == 'knight':
+            piece_num = board.knight(winner)
+            does_piece_checkmate_king = board_string[piece_num][1] is not '.'
+        if piece == 'pawn':
+            piece_num = board.pawn(winner)
+            does_piece_checkmate_king = board_string[piece_num][1] is not '.'
+
+        return does_piece_checkmate_king
+
+    except:
+        return False
 
 def num_chess_games(pgn_path):
     '''
